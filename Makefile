@@ -1,2 +1,2 @@
 default: main
-	cc -o ./target/main main.c
+	cc -o main main.c
