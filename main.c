@@ -1,49 +1,39 @@
 #define ROWS 16
 #define COLS 32
 
-int front[ROWS][COLS] = {0};
-int back[ROWS][COLS] = {0};
+x, y, cy, cx, dx, dy, nbors, front[ROWS][COLS], back[ROWS][COLS];
 
 void display() {
-  for (int x = 0; x < ROWS; ++x) {
-    for (int y = 0; y < COLS; ++y) {
-      if (front[x][y]) {
-        printf("#");
-      } else {
-        printf(".");
-      }
+  for (x = 0; x < ROWS; ++x) {
+    for (y = 0; y < COLS; ++y) {
+      printf("%c", ".#"[front[x][y]]);
     }
     printf("\n");
   }
 }
 
-int mod(int a, int b) { return (a % b + b) % b; }
-
-int count_nbors(int cx, int cy) {
-  int nbors = 0;
-  for (int dx = -1; dx <= 1; ++dx) {
-    for (int dy = -1; dy <= 1; ++dy) {
-      if (dx != 0 || dy != 0) {
-        int x = mod(cx + dx, COLS);
-        int y = mod(cy + dy, ROWS);
-        if (front[y][x])
-          nbors += 1;
-      }
-    }
-  }
-  return nbors;
-}
+mod(a, b) { return (a % b + b) % b; }
 
 void update() {
-  for (int y = 0; y < ROWS; ++y) {
-    for (int x = 0; x < COLS; ++x) {
-      int nbors = count_nbors(x, y);
-      back[y][x] = front[y][x] ? (nbors == 2 || nbors == 3) : nbors == 3;
+  for (cy = 0; cy < ROWS; ++cy) {
+    for (cx = 0; cx < COLS; ++cx) {
+      nbors = 0;
+      for (dx = -1; dx <= 1; ++dx) {
+        for (dy = -1; dy <= 1; ++dy) {
+          if (dx != 0 || dy != 0) {
+            x = ((cx + dx) % COLS + COLS) % COLS;
+            y = ((cy + dy) % ROWS + ROWS) % ROWS;
+            if (front[y][x])
+              nbors += 1;
+          }
+        }
+      }
+      back[cy][cx] = front[cy][cx] ? (nbors == 2 || nbors == 3) : nbors == 3;
     }
   }
 }
 
-int main() {
+main() {
   // glider
   front[0][1] = 1;
   front[1][2] = 1;
@@ -58,5 +48,4 @@ int main() {
     printf("\033[%dA\033[%dD", ROWS, COLS);
     usleep(100 * 1000);
   }
-  return 0;
 }
