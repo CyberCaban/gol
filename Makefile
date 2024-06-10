@@ -1,13 +1,14 @@
+LIBS = -lraylib -lgdi32 -lwinmm
+OBJ = window.o elements.o 
+
 default: 
 	gcc main.c
 
 window:
 	gcc -c ./lib/elements.c
 	gcc -I ./lib -c window.c
-	gcc -L ./lib -o w.exe window.o -lraylib -lgdi32 -lwinmm elements.o
+	gcc -L ./lib -o w.exe $(OBJ) $(LIBS) 
 
 exec: 
-	gcc -c ./lib/elements.c
-	gcc -I ./lib -c window.c
-	gcc -L ./lib -o w.exe window.o -lraylib -lgdi32 -lwinmm elements.o
+	make window
 	./w.exe
