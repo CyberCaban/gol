@@ -11,7 +11,7 @@ void DrawCircleCircle(Circle circle, Color color){
 }
 
 void InputRange(double *state, int posX, int posY, double width, int min, int max){
-    static int focus = 0;
+    static bool focus = 0;
     const double height = 5;
     const double offset = 30;
     double circlePosX;
@@ -25,9 +25,6 @@ void InputRange(double *state, int posX, int posY, double width, int min, int ma
 
     Rectangle rect = {posX, posY, width, height};
     Circle circle = {circlePosX, posY + height / 2, height * 2};
-
-    DrawRectangleRec(rect, BLACK);
-    DrawCircleCircle(circle, LIGHTGRAY);
 
     double newState = (GetMouseX() - posX + 1) / width * (max - min) + min;
 
@@ -46,9 +43,12 @@ void InputRange(double *state, int posX, int posY, double width, int min, int ma
         focus = 0;
     }
 
+    DrawRectangleRec(rect, BLACK);
     if(focus){
+        DrawRectangleRec(rect, (Color){100, 100, 100, 255});
         if (newState < min) *state = min;
         else if (newState > max) *state = max;
         else *state = newState;
     }
+    DrawCircleCircle(circle, LIGHTGRAY);
 }
