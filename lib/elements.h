@@ -1,6 +1,6 @@
 #ifndef ELEMENTS_H
 #define ELEMENTS_H
-void InputRange(double *state, int posX, int posY, double width, int min, int max);
+void InputRange(double *state, int posX, int posY, double width, int min, int max, int id);
 #endif
 
 #ifndef raylib_h

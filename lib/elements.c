@@ -1,5 +1,7 @@
 #include "elements.h"
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
 typedef struct {
     int centerX;
     int centerY;
@@ -10,8 +12,17 @@ void DrawCircleCircle(Circle circle, Color color){
     DrawCircle(circle.centerX, circle.centerY, circle.radius, color);
 }
 
-void InputRange(double *state, int posX, int posY, double width, int min, int max){
-    static bool focus = 0;
+int every(int* arr){
+    for (int i = 0; i < ARRAY_SIZE(arr); i++)
+    {
+        if(arr[i] == 1) return 0;
+    }
+    return 1;
+}
+
+static bool ranges[100] = {0};
+
+void InputRange(double *state, int posX, int posY, double width, int min, int max, int id){
     const double height = 5;
     const double offset = 30;
     double circlePosX;
@@ -35,16 +46,16 @@ void InputRange(double *state, int posX, int posY, double width, int min, int ma
                 .height = rect.height + offset, 
                 .x = rect.x, 
                 .y = rect.y - offset / 2
-            }))
+            }) && every(ranges))
         {
-            focus = 1;
+            ranges[id] = 1;
         }
     } else {
-        focus = 0;
+        ranges[id] = 0;
     }
 
     DrawRectangleRec(rect, BLACK);
-    if(focus){
+    if(ranges[id]){
         DrawRectangleRec(rect, (Color){100, 100, 100, 255});
         if (newState < min) *state = min;
         else if (newState > max) *state = max;
