@@ -47,7 +47,7 @@ int main()
 
             {
                 DrawText("Scale: ", 10, 100, 20, BLACK);
-                DrawText(TextFormat("%f", scale), 70, 100, 20, BLACK);
+                DrawText(TextFormat("%3.f", scale), 70, 100, 20, BLACK);
                 InputRange(&scale, 10, 120, 300, 0, 300, 1);
             }
         EndDrawing();

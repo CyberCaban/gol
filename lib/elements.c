@@ -20,7 +20,7 @@ int every(int* arr){
     return 1;
 }
 
-static bool ranges[100] = {0};
+static int ranges[100] = {0};
 
 void InputRange(double *state, int posX, int posY, double width, int min, int max, int id){
     const double height = 5;
