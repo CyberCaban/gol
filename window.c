@@ -58,7 +58,6 @@ int main()
             if (files.count > 0){
                 for (size_t i = 0; i < files.count; i++)
                 {
-                    // DrawText(files.paths[i], 10, screenHeight/2 + 20*i, 20, BLACK);
                     printf("File dropped: %d\n", files.count);
                     img = LoadImage(files.paths[i]);
                     tex = LoadTextureFromImage(img);
@@ -68,9 +67,9 @@ int main()
             UnloadDroppedFiles(files);
         }
 
-        // if (IsKeyPressed(KEY_Q)){
-        //     UnloadTexture(tex);
-        // }
+        if (IsKeyPressed(KEY_Q)){
+            tex = (Texture2D){0};
+        }
 
         if(IsWindowResized()){
             screenWidth = GetScreenWidth();
